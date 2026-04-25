@@ -8,24 +8,62 @@
     <meta name="google-site-verification" content="4cITCrQAxJLbJci-h6vriHiLa4sAagydEUarFal1sp8" />
     <link rel="canonical" href="https://davidalexilie.github.io/app/" />
     <link rel="icon" type="image/png" href="./favicon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://davidalexilie.github.io/app/" />
+    <meta property="og:title" content="Candlesticks101 — Learn Trading Patterns" />
+    <meta property="og:description" content="Mobile app teaching candlestick trading patterns and technical analysis. Free on Google Play." />
+    <meta property="og:image" content="https://davidalexilie.github.io/app/favicon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Candlesticks101 — Learn Trading Patterns" />
+    <meta name="twitter:description" content="Mobile app teaching candlestick trading patterns and technical analysis. Free on Google Play." />
+    <meta name="twitter:image" content="https://davidalexilie.github.io/app/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script>
       history.scrollRestoration = 'manual';
       (function () {
-        var interacted = false;
-        var mark = function () { interacted = true; };
+        var orig = Element.prototype.scrollIntoView;
+        var allowed = false;
+        Element.prototype.scrollIntoView = function () {
+          if (allowed) return orig.apply(this, arguments);
+        };
+        var enable = function () { allowed = true; };
         ['wheel','touchstart','keydown','mousedown','pointerdown'].forEach(function (ev) {
-          addEventListener(ev, mark, { once: true, passive: true, capture: true });
+          addEventListener(ev, enable, { once: true, passive: true, capture: true });
         });
-        var top = function () { if (!interacted) scrollTo(0, 0); };
-        addEventListener('DOMContentLoaded', top);
-        addEventListener('load', function () {
-          top();
-          [50, 150, 300, 600, 1000, 1500].forEach(function (ms) { setTimeout(top, ms); });
-        });
+        setTimeout(enable, 1500);
       })();
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "Candlesticks101",
+      "alternateName": "Candlesticks 101",
+      "operatingSystem": "Android",
+      "applicationCategory": "EducationApplication",
+      "description": "Mobile app teaching candlestick trading patterns, technical analysis, and chart reading for beginner traders.",
+      "url": "https://davidalexilie.github.io/app/",
+      "downloadUrl": "https://play.google.com/store/apps/details?id=com.david.candlesticks101",
+      "installUrl": "https://play.google.com/store/apps/details?id=com.david.candlesticks101",
+      "image": "https://davidalexilie.github.io/app/favicon.png",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "David Ilie",
+        "url": "https://davidalexilie.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "David Ilie",
+        "url": "https://davidalexilie.github.io/"
+      }
+    }
     </script>
     <script type="module" crossorigin src="./assets/index-CwUU3zMO.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CNxJUCQg.css">

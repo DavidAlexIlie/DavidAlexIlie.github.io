@@ -16,17 +16,16 @@
       }
       history.scrollRestoration = 'manual';
       (function () {
-        var interacted = false;
-        var mark = function () { interacted = true; };
+        var orig = Element.prototype.scrollIntoView;
+        var allowed = false;
+        Element.prototype.scrollIntoView = function () {
+          if (allowed) return orig.apply(this, arguments);
+        };
+        var enable = function () { allowed = true; };
         ['wheel','touchstart','keydown','mousedown','pointerdown'].forEach(function (ev) {
-          addEventListener(ev, mark, { once: true, passive: true, capture: true });
+          addEventListener(ev, enable, { once: true, passive: true, capture: true });
         });
-        var top = function () { if (!interacted) scrollTo(0, 0); };
-        addEventListener('DOMContentLoaded', top);
-        addEventListener('load', function () {
-          top();
-          [50, 150, 300, 600, 1000, 1500].forEach(function (ms) { setTimeout(top, ms); });
-        });
+        setTimeout(enable, 1500);
       })();
     </script>
     <script type="module" crossorigin src="/app/assets/index-CwUU3zMO.js"></script>
