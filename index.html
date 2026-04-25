@@ -1,18 +1,332 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Candlesticks101 - Master Trading Patterns & Technical Analysis</title>
-    <meta name="description" content="Learn candlestick trading patterns, technical analysis, and chart reading with Candlesticks101. Free mobile app for stocks, forex, and crypto traders." />
-    <link rel="icon" type="image/png" href="./favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/index-CwUU3zMO.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CNxJUCQg.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>David Ilie — Builder, Student, Trader</title>
+<meta name="description" content="The personal site of David Ilie. Choose your path: see my CV, or explore Candlesticks101, my mobile trading-education app." />
+<link rel="icon" type="image/png" href="/app/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0c;
+    --bg-2: #111114;
+    --ink: #f5f1e8;
+    --ink-dim: #8b8678;
+    --accent: #fed65e;
+    --blue: #3a7afe;
+    --line: rgba(245,241,232,0.08);
+  }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 14px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Subtle grain overlay */
+  body::before {
+    content:"";
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(58,122,254,0.07) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(254,214,94,0.05) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content:"";
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.5;
+  }
+
+  .frame {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 40px;
+  }
+
+  /* Top bar */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+  }
+  .topbar .meta { display: flex; gap: 28px; }
+  .topbar .dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* Hero */
+  .hero {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 60px 0 40px;
+    position: relative;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .intro h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    font-variation-settings: "opsz" 144;
+  }
+  .intro h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144;
+  }
+  .intro h1 .underline {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+    text-decoration-color: var(--blue);
+  }
+  .intro p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-dim);
+    max-width: 380px;
+    margin-bottom: 8px;
+  }
+  .intro .signature {
+    margin-top: 40px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    font-variation-settings: "opsz" 9;
+  }
+  .intro .signature::before {
+    content: "— ";
+    color: var(--accent);
+  }
+
+  /* Choice cards */
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .card {
+    position: relative;
+    display: block;
+    padding: 32px 36px;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s;
+    cursor: pointer;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, transparent 60%, var(--card-glow, rgba(254,214,94,0.08)) 100%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .card:hover {
+    transform: translateX(8px);
+    border-color: var(--card-border, var(--accent));
+  }
+  .card:hover::before { opacity: 1; }
+  .card .label {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card .num {
+    color: var(--card-color, var(--accent));
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .card .title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .card .desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-dim);
+    margin-bottom: 20px;
+    max-width: 380px;
+  }
+  .card .arrow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--card-color, var(--accent));
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .card .arrow svg {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .card:hover .arrow svg {
+    transform: translateX(8px);
+  }
+
+  .card.cv {
+    --card-color: var(--blue);
+    --card-border: var(--blue);
+    --card-glow: rgba(58,122,254,0.12);
+  }
+  .card.app {
+    --card-color: var(--accent);
+    --card-border: var(--accent);
+    --card-glow: rgba(254,214,94,0.12);
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  /* Reveal animation */
+  .reveal { opacity: 0; transform: translateY(12px); animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+  .reveal.d1 { animation-delay: 0.05s; }
+  .reveal.d2 { animation-delay: 0.18s; }
+  .reveal.d3 { animation-delay: 0.32s; }
+  .reveal.d4 { animation-delay: 0.46s; }
+  .reveal.d5 { animation-delay: 0.6s; }
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mobile */
+  @media (max-width: 820px) {
+    .frame { padding: 20px 22px; }
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .hero { padding: 40px 0; }
+    .intro h1 { font-size: clamp(40px, 12vw, 72px); }
+    .card { padding: 24px 24px; }
+    .card .title { font-size: 28px; }
+    .topbar { font-size: 10px; }
+    .topbar .meta { gap: 16px; }
+    .topbar .meta span:last-child { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <header class="topbar reveal d1">
+      <div class="brand"><span class="dot"></span>DAVID ILIE</div>
+      <div class="meta">
+        <span>BUCHAREST, RO</span>
+        <span>2026</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="intro">
+          <h1 class="reveal d2">
+            High-school<br>
+            <em>builder</em>,<br>
+            <span class="underline">trader</span>,<br>
+            tinkerer.
+          </h1>
+          <p class="reveal d3">
+            I'm a Romanian student preparing for AI/ML olympiads, building things in the gaps. Some of those things make it to the App Store. Most don't. This site keeps both kinds of work in one place.
+          </p>
+          <p class="signature reveal d3">David Ilie</p>
+        </div>
+
+        <div class="choices">
+          <a href="/cv/" class="card cv reveal d4">
+            <div class="label"><span class="num">01</span><span>The Person</span></div>
+            <div class="title">Curriculum&nbsp;Vitae</div>
+            <div class="desc">Background, education, projects, the things I've worked on outside school. Updated regularly.</div>
+            <div class="arrow">
+              <span>Read CV</span>
+              <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
+                <path d="M0 6h18M13 1l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+              </svg>
+            </div>
+          </a>
+
+          <a href="/app/" class="card app reveal d5">
+            <div class="label"><span class="num">02</span><span>The Product</span></div>
+            <div class="title">Candlesticks101</div>
+            <div class="desc">A mobile app teaching candlestick trading patterns. Live on Google Play. Built solo.</div>
+            <div class="arrow">
+              <span>Open Site</span>
+              <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
+                <path d="M0 6h18M13 1l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+              </svg>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer reveal d5">
+      <div>davidalexilie.github.io</div>
+      <div>v1 / Apr 2026</div>
+    </footer>
+  </div>
+</body>
 </html>
