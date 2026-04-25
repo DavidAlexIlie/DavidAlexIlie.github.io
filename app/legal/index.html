@@ -5,14 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Candlesticks101 — Legal</title>
     <meta name="description" content="Privacy policy and terms of service for the Candlesticks101 mobile app." />
+    <meta name="google-site-verification" content="ugiEUd9RlLgJej5HYQijKzQOty8EkLSUZmaQBJZ6BbA" />
     <link rel="icon" type="image/png" href="/app/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script>
-      if (window.location.pathname !== '/' && window.location.pathname.endsWith('/')) {
-        history.replaceState(null, '', window.location.pathname.replace(/\/+$/, '') + window.location.search + window.location.hash);
+      if (location.pathname !== '/' && location.pathname.endsWith('/')) {
+        history.replaceState(null, '', location.pathname.replace(/\/+$/, '') + location.search + location.hash);
       }
+      history.scrollRestoration = 'manual';
+      (function () {
+        var interacted = false;
+        var mark = function () { interacted = true; };
+        ['wheel','touchstart','keydown','mousedown','pointerdown'].forEach(function (ev) {
+          addEventListener(ev, mark, { once: true, passive: true, capture: true });
+        });
+        var top = function () { if (!interacted) scrollTo(0, 0); };
+        addEventListener('DOMContentLoaded', top);
+        addEventListener('load', function () {
+          top();
+          [50, 150, 300, 600, 1000, 1500].forEach(function (ms) { setTimeout(top, ms); });
+        });
+      })();
     </script>
     <script type="module" crossorigin src="/app/assets/index-CwUU3zMO.js"></script>
     <link rel="stylesheet" crossorigin href="/app/assets/index-CNxJUCQg.css">
